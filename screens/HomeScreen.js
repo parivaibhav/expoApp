@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import { Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';  // Example font
@@ -21,6 +21,8 @@ export default function HomeScreen() {
     if (!fontsLoaded) {
         return <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />;
     }
+
+
 
     useEffect(() => {
         loadTasks();
@@ -52,7 +54,9 @@ export default function HomeScreen() {
         const updatedTasks = tasks.filter((_, i) => i !== index);
         setTasks(updatedTasks);
         setTask(tasks[index]);
-        await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+        await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks)); 
+
+
     };
 
     return (
@@ -78,7 +82,7 @@ export default function HomeScreen() {
                                 <Text style={styles.removeButton}>Delete</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => editTask(index)}>
-                                <Text style={styles.editButton}>Edit</Text>
+                                <Text style={styles.editButton} value={"edit"}>Edit</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -121,7 +125,12 @@ const styles = StyleSheet.create({
     taskContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10, paddingTop: 10, paddingBottom: 20
+        paddingHorizontal: 10, paddingTop: 10,
+        paddingBottom: 20,
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        marginTop: 5,
+
     },
     taskText: {
         fontSize: 16,

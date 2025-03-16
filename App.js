@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,7 +7,7 @@ import ProfileScreen from './screens/ProfileScreen';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Ionicons } from '@expo/vector-icons';
 import SearchScreen from './screens/SearchScreen';
-import { View, Text,useColorScheme,ActivityIndicator } from 'react-native';
+import { View, Text, useColorScheme, Image ,StyleSheet,Button} from 'react-native';
 
 
 
@@ -28,45 +28,43 @@ function SettingsScreen() {
 
 
 export default function App() {
-
-  const colorScheme = useColorScheme(); 
-
-  // Define dynamic colors for navigation
-  const backgroundColor = colorScheme === 'dark' ? '#121212' : '#ffffff';
-  const textColor = colorScheme === 'dark' ? '#ffffff' : '#000000';
+  const colorScheme = useColorScheme();
 
 
   return (
+    
     <NavigationContainer>
       <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused }) => {
           let iconName;
+          let iconSize = focused ? 30 : 25;
 
           // Set icon based on the screen name
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+            iconName = <Image source={require('./assets/chat.png')} style={{ width: iconSize, height: iconSize }} />;
           }
-          else if (route.name === 'Search') {
-            iconName = focused ? 'search' : 'search-outline';
+          else if (route.name === 'Status') {
+            iconName = <Image source={require('./assets/chat.png')} style={{ width: iconSize, height: iconSize }} />;
           }
           else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings-outline';
+            iconName = <Image source={require('./assets/comm.png')} style={{ width: iconSize, height: iconSize }} />;
           }
           else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline';
+            iconName = <Image source={require('./assets/call.png')} style={{ width: iconSize, height: iconSize }} />;
           }
 
           // Return icon
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return iconName;
         },
-        tabBarActiveTintColor: 'blue',
+        tabBarActiveTintColor: '#347F1',
         tabBarInactiveTintColor: 'gray',
-      })}>
+      })}   style={{backgroundColor: 'black' ,color:'white'}}>
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Status" component={SearchScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
